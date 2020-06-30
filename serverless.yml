@@ -17,3 +17,13 @@ functions:
 
 plugins:
   - serverless-offline
+  - serverless-domain-manager
+
+custom:
+  # カスタムドメインの設定
+  customDomain:
+    domainName: api.expense-manager.cloud
+    certificateName: 'expense-manager.cloud'
+    basePath: ''
+    stage: prod
+    createRoute53Record: true
