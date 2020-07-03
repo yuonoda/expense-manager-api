@@ -9,11 +9,15 @@ provider:
   region: ap-northeast-1
 
 functions:
-  app:
-    handler: index.handler
+  accounts:
+    handler: controllers/account.controller.handler
     events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http: GET /accounts
+#  app:
+#    handler: index.handler
+#    events:
+#      - http: ANY /
+#      - http: 'ANY {proxy+}'
   dbSync:
     handler: batch/dbSync.handler
 
