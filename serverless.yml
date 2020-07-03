@@ -33,3 +33,6 @@ custom:
     basePath: ''
     stage: prod
     createRoute53Record: true
+  serverless-offline:
+    httpPort: 4000
+    lambdaPort: 4001
