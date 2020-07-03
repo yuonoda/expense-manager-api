@@ -14,6 +14,8 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
+  dbSync:
+    handler: batch/dbSync.handler
 
 plugins:
   - serverless-offline

@@ -22,6 +22,8 @@ const sequelize = new Sequelize(
   }
 );
 
+db.Account = require('./account.model')(sequelize)
+
 db.sequelize = sequelize;
 db.Op = Sequelize.Op;
 
