@@ -7,17 +7,18 @@ provider:
   stage: dev
   runtime: nodejs12.x
   region: ap-northeast-1
+  environment:
+    DB_NAME: ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_NAME}
+    DB_USER:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_USER}
+    DB_PASSWORD:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PASSWORD}
+    DB_HOST:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_HOST}
+    DB_PORT:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PORT}
 
 functions:
   accounts:
-    handler: controllers/account.controller.handler
+    handler: controllers/account-controller.handler
     events:
       - http: GET /accounts
-#  app:
-#    handler: index.handler
-#    events:
-#      - http: ANY /
-#      - http: 'ANY {proxy+}'
   dbSync:
     handler: batch/dbSync.handler
 
@@ -26,7 +27,6 @@ plugins:
   - serverless-domain-manager
 
 custom:
-  # カスタムドメインの設定
   customDomain:
     domainName: api.expense-manager.cloud
     certificateName: 'expense-manager.cloud'
