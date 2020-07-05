@@ -6,13 +6,13 @@ module.exports = sequelize => {
     {
       account_id: {
         field: 'account_id',
-        type: Sequelize.BIGINT,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
       account_group_id: { // TODO Set foreign key
         field: 'account_group_id',
-        type: Sequelize.BIGINT,
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       account_name: {
