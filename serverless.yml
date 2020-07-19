@@ -1,38 +1,38 @@
-# serverless.yml
-
-service: expense-manager-api
-
-provider:
-  name: aws
-  stage: dev
-  runtime: nodejs12.x
-  region: ap-northeast-1
-  environment:
-    DB_NAME: ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_NAME}
-    DB_USER:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_USER}
-    DB_PASSWORD:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PASSWORD}
-    DB_HOST:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_HOST}
-    DB_PORT:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PORT}
-
-functions:
-  accounts:
-    handler: controllers/account-controller.handler
-    events:
-      - http: GET /accounts
-  dbSync:
-    handler: batch/dbSync.handler
-
-plugins:
-  - serverless-offline
-  - serverless-domain-manager
-
-custom:
-  customDomain:
-    domainName: api.expense-manager.cloud
-    certificateName: 'expense-manager.cloud'
-    basePath: ''
-    stage: prod
-    createRoute53Record: true
-  serverless-offline:
-    httpPort: 4000
-    lambdaPort: 4001
+## serverless.yml
+#
+#service: expense-manager-api
+#
+#provider:
+#  name: aws
+#  stage: dev
+#  runtime: nodejs12.x
+#  region: ap-northeast-1
+#  environment:
+#    DB_NAME: ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_NAME}
+#    DB_USER:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_USER}
+#    DB_PASSWORD:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PASSWORD}
+#    DB_HOST:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_HOST}
+#    DB_PORT:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PORT}
+#
+#functions:
+#  accounts:
+#    handler: controllers/account-controller.handler
+#    events:
+#      - http: GET /accounts
+#  dbSync:
+#    handler: batch/dbSync.handler
+#
+#plugins:
+#  - serverless-offline
+#  - serverless-domain-manager
+#
+#custom:
+#  customDomain:
+#    domainName: api.expense-manager.cloud
+#    certificateName: 'expense-manager.cloud'
+#    basePath: ''
+#    stage: prod
+#    createRoute53Record: true
+#  serverless-offline:
+#    httpPort: 4000
+#    lambdaPort: 4001
