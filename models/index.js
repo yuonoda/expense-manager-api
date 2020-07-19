@@ -24,6 +24,12 @@ const sequelize = new Sequelize(
 );
 
 db.Account = require('./account.model')(sequelize)
+db.Transaction = require('./transaction.model')(sequelize)
+
+
+db.Account.hasMany(db.Transaction, { foreignKey: 'account_id' })
+// db.Transaction.belongsTo(db.Account, )
+
 
 db.sequelize = sequelize;
 db.Op = Sequelize.Op;
