@@ -7,6 +7,10 @@ module.exports = function(app, passport) {
         console.log('transactions')
         await transactionController.getTransactions(req, res)
     })
+    router.get('/transaction/:transaction_id', async (req, res) => {
+        console.log('transaction')
+        await transactionController.getTransaction(req, res)
+    })
     return router
 }
 
