@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "offline": "sls offline start --stage local"
+    "offline": "sls offline start --stage local",
+    "start": "forever start -a -s --minUptime 2000 --spinSleepTime 3000 index.js",
+    "stop": "forever stop -a -s",
+    "restart": "forever restart -a -s --minUptime 2000 --spinSleepTime 3000 index.js"
   },
   "keywords": [],
   "author": "",
