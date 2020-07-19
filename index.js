@@ -1,7 +1,7 @@
 // index.js
 require("dotenv").config();
 console.log('index.js')
-const serverless = require('serverless-http');
+// const serverless = require('serverless-http');
 const express = require('express')
 const app = express()
 const path = require('path')
@@ -11,7 +11,7 @@ const passport = require('passport')
 const routesApi = require(path.join(__dirname, './routes/list_api.js'))(app, passport)
 for (const router of routesApi) {
   console.log('router:', router)
-  app.use('/api', router)
+  app.use('/', router)
 }
 
 // DB接続
@@ -26,4 +26,9 @@ async function connectDb() {
 }
 connectDb();
 
-module.exports.handler = serverless(app);
+
+var server = app.listen(3000, function(){
+  console.log("Node.js is listening to PORT:" + server.address().port);
+});
+
+// module.exports.handler = serverless(app);
