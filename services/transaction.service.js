@@ -14,6 +14,10 @@ class TransactionService {
     const transaction = await db.Transaction.findOne({ where })
     return transaction
   }
+  // async setTransaction({transaction_name, transaction_amount, account_id}) {
+  //   console.log('TransactionService::setTransaction');
+  //   const result = await db.Transaction.insert(db, )
+  // }
 }
 
 module.exports = TransactionService
