@@ -10,7 +10,7 @@ module.exports = sequelize => {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            account_group_id: { // TODO Set foreign key
+            account_group_id: {
                 field: 'account_group_id',
                 type: Sequelize.INTEGER,
                 allowNull: true,

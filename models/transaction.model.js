@@ -28,7 +28,7 @@ module.exports = sequelize => {
             transaction_time: {
                 field: 'transaction_time',
                 type: Sequelize.TIME,
-                default: sequelize.literal('CURRENT_TIMESTAMP')
+                default: null
             },
             is_paid: {
                 field: 'is_paid',
