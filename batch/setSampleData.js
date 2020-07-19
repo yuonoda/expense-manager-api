@@ -1,33 +1,38 @@
 const db = require('../models/index')
 
 const setSampleData = () => {
-    // db.Account.destroy({
-    //     where: {},
-    //     truncate: true
-    // })
+    db.AccountGroup.bulkCreate([
+        {
+            account_group_id: 1,
+            account_group_name: 'Monthly Accounts'
+        },
+        {
+            account_group_id: 2,
+            account_group_name: 'Saving Accounts'
+        }
+    ])
 
     db.Account.bulkCreate([
         {
+            account_id: 1,
             account_name: '普通預金',
             account_balance: 400000,
             account_group_id: 1
         },
         {
+            account_id: 2,
             account_name: '現金',
             account_balance: 20000,
             account_group_id: 1
         },
         {
+            account_id: 3,
             account_name: '定期預金',
-            account_balance: 400000,
+            account_balance: 1000000,
             account_group_id: 2
         },
     ])
 
-    // db.Transaction.destroy({
-    //     where: {},
-    //     truncate: true
-    // })
     db.Transaction.bulkCreate([
         {
             transaction_name: '家賃',
