@@ -32,22 +32,27 @@ const setSampleData = () => {
         {
             transaction_name: '家賃',
             transaction_amount: 80000,
+            account_id: 1,
         },
         {
             transaction_name: 'スーパー',
             transaction_amount: 2000,
+            account_id: 1,
         },
         {
             transaction_name: 'コンビニ',
             transaction_amount: 500,
+            account_id: 1,
         },
         {
             transaction_name: 'コンビニ',
             transaction_amount: 500,
+            account_id: 1,
         },
         {
             transaction_name: 'コンビニ',
             transaction_amount: 500,
+            account_id: 1,
         },
     ])
 }

@@ -13,6 +13,7 @@ module.exports = sequelize => {
             account_id: {
                 field: 'account_id',
                 type: Sequelize.INTEGER,
+                allowNull: false,
             },
             transaction_name: {
                 field: 'transaction_name',
