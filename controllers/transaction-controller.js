@@ -9,26 +9,34 @@ const validationSchema = Joi.object().keys({
 })
 
 
-module.exports.getTransactions = async (req, res) => {
+module.exports.getTransactions = async (event, context, callback) => {
     console.info('getTransactions')
+
     const transactionService = new TransactionService()
     const transactions = await transactionService.getTransactions()
     // TODO Format and eliminate unnecessary output
     // TODO Move to utilities/response
     // TODO Error Handling
-    res.status(200).json({transactions})
+    const responseBody = { 'transactions': transactions }
+    const response = {}
+    response.statusCode = 200
+    response.body = JSON.stringify(responseBody)
+    callback(null, response)
 }
 
 
-module.exports.getTransaction = async (req, res) => {
+module.exports.getTransaction = async ({ pathParameters }, context, callback) => {
     console.info('getTransaction')
     const params = {
-        transactionId: req.params.transaction_id
+        transactionId: pathParameters.transaction_id
     }
 
     const { error } = validationSchema.validate(params)
     if ( error ) {
-        res.status(400).json(error)
+        const responseBody = {
+            'error': { status: 400, type: 'Bad Request' , message: error.message }
+        }
+        callback(null, {statusCode: 400, body: JSON.stringify(responseBody)})
         return
     }
 
@@ -37,5 +45,6 @@ module.exports.getTransaction = async (req, res) => {
     // TODO Format and eliminate unnecessary output
     // TODO Move to utilities/response
     // TODO Error Handling
-    res.status(200).json({transaction})
+    const responseBody = { 'transaction': transaction }
+    callback(null, {statusCode: 200, body: JSON.stringify(responseBody)})
 }
