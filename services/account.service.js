@@ -1,6 +1,6 @@
 const db = require('../models')
 
-class AccuntService {
+class AccountService {
   async getAccounts() {
     console.info('AccuntService::getAccounts')
     const accounts = await db.Account.findAll()
@@ -8,4 +8,4 @@ class AccuntService {
   }
 }
 
-module.exports = AccuntService
+module.exports = AccountService

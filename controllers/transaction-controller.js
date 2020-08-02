@@ -14,14 +14,12 @@ module.exports.getTransactions = async (event, context, callback) => {
 
     const transactionService = new TransactionService()
     const transactions = await transactionService.getTransactions()
-    // TODO Format and eliminate unnecessary output
-    // TODO Move to utilities/response
     // TODO Error Handling
     const responseBody = { 'transactions': transactions }
     const response = {}
     response.statusCode = 200
     response.body = JSON.stringify(responseBody)
-    callback(null, response)
+    return response
 }
 
 
@@ -42,9 +40,7 @@ module.exports.getTransaction = async ({ pathParameters }, context, callback) =>
 
     const transactionService = new TransactionService()
     const transaction = await transactionService.getTransaction(params.transactionId)
-    // TODO Format and eliminate unnecessary output
-    // TODO Move to utilities/response
     // TODO Error Handling
     const responseBody = { 'transaction': transaction }
-    callback(null, {statusCode: 200, body: JSON.stringify(responseBody)})
+    return {statusCode: 200, body: JSON.stringify(responseBody)}
 }

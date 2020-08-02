@@ -7,6 +7,16 @@ provider:
   stage: dev
   runtime: nodejs12.x
   region: ap-northeast-1
+  timeout: 30
+  # TODO ポリシーを指定
+  role: arn:aws:iam::718284540539:role/lambda-vpc-role
+  vpc:
+    securityGroupIds:
+      - sg-055e7ceaa59dbe625
+    subnetIds:
+      - subnet-c2b39e99
+      - subnet-e05ba8a8
+      - subnet-fa43b9d1
   environment:
     DB_NAME: ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_NAME}
     DB_USER:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_USER}
@@ -34,8 +44,8 @@ functions:
       - http: GET /transactions/{transaction_id}
         headers:
           Content-Type: "'application/json'"
-#  dbSync:
-#    handler: batch/dbSync.handler
+  initDb:
+    handler: batch/init-db.init
 
 plugins:
   - serverless-offline

@@ -1,7 +1,7 @@
 const db = require('../models/index')
 
-const setSampleData = () => {
-    db.AccountGroup.bulkCreate([
+module.exports.setSampleData = async () => {
+    await db.AccountGroup.bulkCreate([
         {
             account_group_id: 1,
             account_group_name: 'Monthly Accounts'
@@ -12,7 +12,7 @@ const setSampleData = () => {
         }
     ])
 
-    db.Account.bulkCreate([
+    await db.Account.bulkCreate([
         {
             account_id: 1,
             account_name: '普通預金',
@@ -33,7 +33,7 @@ const setSampleData = () => {
         },
     ])
 
-    db.Transaction.bulkCreate([
+    await db.Transaction.bulkCreate([
         {
             transaction_name: '家賃',
             transaction_amount: 80000,
@@ -60,6 +60,7 @@ const setSampleData = () => {
             account_id: 1,
         },
     ])
+
+    return true
 }
 
-exports.setSampleData = setSampleData
