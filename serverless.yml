@@ -1,0 +1,53 @@
+# serverless.yml
+
+service: expense-manager-api
+
+provider:
+  name: aws
+  stage: dev
+  runtime: nodejs12.x
+  region: ap-northeast-1
+  environment:
+    DB_NAME: ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_NAME}
+    DB_USER:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_USER}
+    DB_PASSWORD:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PASSWORD}
+    DB_HOST:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_HOST}
+    DB_PORT:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PORT}
+
+functions:
+  #  TODO 共通設定を共通化したい
+  accounts:
+    handler: controllers/account-controller.getAccounts
+    events:
+      - http: GET /accounts
+        headers:
+          Content-Type: "'application/json'"
+  transactions:
+    handler: controllers/transaction-controller.getTransactions
+    events:
+      - http: GET /transactions
+        headers:
+          Content-Type: "'application/json'"
+  transaction:
+    handler: controllers/transaction-controller.getTransaction
+    events:
+      - http: GET /transactions/{transaction_id}
+        headers:
+          Content-Type: "'application/json'"
+#  dbSync:
+#    handler: batch/dbSync.handler
+
+plugins:
+  - serverless-offline
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: api.expense-manager.cloud
+    certificateName: 'expense-manager.cloud'
+    basePath: ''
+    stage: prod
+    createRoute53Record: true
+  serverless-offline:
+    httpPort: 4000
+    lambdaPort: 4001

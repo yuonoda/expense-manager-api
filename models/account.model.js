@@ -33,7 +33,7 @@ module.exports = sequelize => {
             // 楽観ロックフラグ
             version: true,
             // 自動生成カラムの命名ルールをスネークに
-            underscored: true,
+            underscored: true, // TODO createdAtなどがスネークになっていない
         }
     )
     return AccountModel
