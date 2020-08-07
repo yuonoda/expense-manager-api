@@ -17,12 +17,6 @@ provider:
       - subnet-c2b39e99
       - subnet-e05ba8a8
       - subnet-fa43b9d1
-  environment:
-    DB_NAME: ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_NAME}
-    DB_USER:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_USER}
-    DB_PASSWORD:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PASSWORD}
-    DB_HOST:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_HOST}
-    DB_PORT:  ${file(./.env.${opt:stage, self:provider.stage, 'dev'}.json):DB_PORT}
 
 functions:
   #  TODO 共通設定を共通化したい
@@ -50,6 +44,7 @@ functions:
 plugins:
   - serverless-offline
   - serverless-domain-manager
+  - serverless-dotenv-plugin
 
 custom:
   customDomain:
