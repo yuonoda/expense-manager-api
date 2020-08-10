@@ -14,10 +14,33 @@ class TransactionService {
     const transaction = await db.Transaction.findOne({ where })
     return transaction
   }
-  // async setTransaction({transaction_name, transaction_amount, account_id}) {
-  //   console.log('TransactionService::setTransaction');
-  //   const result = await db.Transaction.insert(db, )
-  // }
+
+  /**
+   * 新しいトランザクションを追加する
+   * @param transactionName
+   * @param transactionAmount
+   * @param transactionTime
+   * @param isPaid
+   * @param accountId
+   * @returns {Promise<boolean>}
+   */
+  async setTransaction({ transactionName, transactionAmount, transactionTime, isPaid, accountId = 1 }) {
+    console.log('TransactionService::setTransaction');
+    let result = false
+    await db.Transaction.create({
+      account_id: accountId,
+      transaction_name: transactionName,
+      transaction_amount: transactionAmount,
+      transaction_time: transactionTime,
+      is_paid: isPaid
+    }).then(transaction => {
+      // console.debug(transaction)
+      result = true
+    }).catch(e => {
+      console.error(e)
+    })
+    return result
+  }
 }
 
 module.exports = TransactionService

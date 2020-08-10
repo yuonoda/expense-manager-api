@@ -26,16 +26,22 @@ functions:
       - http: GET /accounts
         headers:
           Content-Type: "'application/json'"
-  transactions:
+  getTransactions:
     handler: controllers/transaction-controller.getTransactions
     events:
       - http: GET /transactions
         headers:
           Content-Type: "'application/json'"
-  transaction:
+  getTransaction:
     handler: controllers/transaction-controller.getTransaction
     events:
       - http: GET /transactions/{transaction_id}
+        headers:
+          Content-Type: "'application/json'"
+  createTransaction:
+    handler: controllers/transaction-controller.createTransaction
+    events:
+      - http: POST /transactions
         headers:
           Content-Type: "'application/json'"
   initDb:

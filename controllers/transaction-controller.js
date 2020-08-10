@@ -22,6 +22,25 @@ module.exports.getTransactions = async (event, context, callback) => {
     return response
 }
 
+module.exports.createTransaction = async ({ body }, context, callback) => {
+    console.info('crateTransaction')
+    // TODO バリデーション
+
+    body = JSON.parse(body)
+    const newTransaction = {
+        transactionName: body.transaction_name,
+        transactionAmount: body.transaction_amount,
+    }
+
+    const transactionService = new TransactionService()
+    const result = await transactionService.setTransaction(newTransaction)
+    if( result ) {
+        return {statusCode: 201, body: JSON.stringify({status: 201, message: "Created" })}
+    } else {
+        return {statusCode: 500, body: JSON.stringify({status: 500, message: "Internal Server Error" })}
+    }
+
+}
 
 module.exports.getTransaction = async ({ pathParameters }, context, callback) => {
     console.info('getTransaction')
@@ -31,10 +50,8 @@ module.exports.getTransaction = async ({ pathParameters }, context, callback) =>
 
     const { error } = validationSchema.validate(params)
     if ( error ) {
-        const responseBody = {
-            'error': { status: 400, type: 'Bad Request' , message: error.message }
-        }
-        callback(null, {statusCode: 400, body: JSON.stringify(responseBody)})
+        // TODO バリデーション詳細の追加
+        callback(null, {statusCode: 400, body: JSON.stringify({ status: 400, message: 'Bad Request' })})
         return
     }
 

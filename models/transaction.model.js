@@ -40,7 +40,11 @@ module.exports = sequelize => {
                 type: Sequelize.STRING(16),
                 default: null,
                 unique: true
-            }
+            },
+            // TODO スネークにする
+            // created_at: {
+            //     field: 'created_at',
+            // }
         },
         {
             // 論理削除フラグ
