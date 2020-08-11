@@ -2,14 +2,6 @@ const Joi = require('@hapi/joi')
 const TransactionService = require('../services/transaction.service')
 const Response = require('../utilities/response')
 
-// バリデーションルール
-const validationSchema = Joi.object().keys({
-  transactionId: Joi.string()
-      .regex(/^[0-9]+$/)
-      .required(),
-})
-
-
 module.exports.getTransactions = async (event, context, callback) => {
     console.info('getTransactions')
 
@@ -23,19 +15,37 @@ module.exports.getTransactions = async (event, context, callback) => {
 
 module.exports.createTransaction = async ({ body }, context, callback) => {
     console.info('crateTransaction')
-    // TODO バリデーション
-    body = JSON.parse(body)
-    const newTransaction = {
+
+    // JSONフォーマットチェック
+    const response = new Response()
+    try {
+        body = JSON.parse(body)
+    } catch (e) {
+        return response.badRequest(null, 'Invalid JSON format')
+    }
+
+    // 中身のバリデーション
+    // TODO 他のパラメーターも追加
+    // TODO より細かいバリデーション
+    const params = {
         transactionName: body.transaction_name,
         transactionAmount: body.transaction_amount,
+    }
+    const validationSchema = Joi.object().keys({
+        transactionName: Joi.string(),
+        transactionAmount: Joi.number()
+    })
+    const { error } = validationSchema.validate(params)
+    if ( error ) {
+        const errors = error.details.map( detail => detail.message)
+        return response.badRequest(errors, 'Validation Error')
     }
 
     // データを追加
     const transactionService = new TransactionService()
-    const result = await transactionService.setTransaction(newTransaction)
+    const result = await transactionService.setTransaction(params)
 
     // 結果に応じてレスポンスを返す
-    const response = new Response()
     if( result ) {
         return response.created()
     } else {
@@ -46,17 +56,24 @@ module.exports.createTransaction = async ({ body }, context, callback) => {
 
 module.exports.getTransaction = async ({ pathParameters }, context, callback) => {
     console.info('getTransaction')
+
+    // バリデーション
     const params = {
         transactionId: pathParameters.transaction_id
     }
-
-    const response = new Response()
+    const validationSchema = Joi.object().keys({
+        transactionId: Joi.string()
+            .regex(/^[0-9]+$/)
+            .required()
+    })
     const { error } = validationSchema.validate(params)
+    const response = new Response()
     if ( error ) {
         const errors = error.details.map( detail => detail.message)
         return response.badRequest(errors, 'Validation Error')
     }
 
+    // 取引詳細を取得
     const transactionService = new TransactionService()
     const transaction = await transactionService.getTransaction(params.transactionId)
     // TODO Error Handling
