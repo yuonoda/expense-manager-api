@@ -1,4 +1,5 @@
 const AccountService = require('../services/account.service')
+const Response = require('../utilities/response')
 
 module.exports.getAccounts = async (event, context, callback) => {
     console.info('accounts')
@@ -6,9 +7,7 @@ module.exports.getAccounts = async (event, context, callback) => {
     const accountService = new AccountService()
     const accounts = await accountService.getAccounts()
     const responseBody = {'accounts': accounts}
-    const responseJson = JSON.stringify(responseBody) // TODO 例外処理
-    const response = {}
-    response.statusCode = 200
-    response.body = responseJson
-    return response
+    // TODO エラー処理
+    const response = new Response()
+    return response.ok(responseBody)
 }

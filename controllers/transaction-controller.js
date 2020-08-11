@@ -1,5 +1,6 @@
 const Joi = require('@hapi/joi')
 const TransactionService = require('../services/transaction.service')
+const Response = require('../utilities/response')
 
 // バリデーションルール
 const validationSchema = Joi.object().keys({
@@ -16,28 +17,29 @@ module.exports.getTransactions = async (event, context, callback) => {
     const transactions = await transactionService.getTransactions()
     // TODO Error Handling
     const responseBody = { 'transactions': transactions }
-    const response = {}
-    response.statusCode = 200
-    response.body = JSON.stringify(responseBody)
-    return response
+    const response = new Response()
+    return response.ok(responseBody)
 }
 
 module.exports.createTransaction = async ({ body }, context, callback) => {
     console.info('crateTransaction')
     // TODO バリデーション
-
     body = JSON.parse(body)
     const newTransaction = {
         transactionName: body.transaction_name,
         transactionAmount: body.transaction_amount,
     }
 
+    // データを追加
     const transactionService = new TransactionService()
     const result = await transactionService.setTransaction(newTransaction)
+
+    // 結果に応じてレスポンスを返す
+    const response = new Response()
     if( result ) {
-        return {statusCode: 201, body: JSON.stringify({status: 201, message: "Created" })}
+        return response.created()
     } else {
-        return {statusCode: 500, body: JSON.stringify({status: 500, message: "Internal Server Error" })}
+        return response.internalServerError()
     }
 
 }
@@ -48,16 +50,16 @@ module.exports.getTransaction = async ({ pathParameters }, context, callback) =>
         transactionId: pathParameters.transaction_id
     }
 
+    const response = new Response()
     const { error } = validationSchema.validate(params)
     if ( error ) {
-        // TODO バリデーション詳細の追加
-        callback(null, {statusCode: 400, body: JSON.stringify({ status: 400, message: 'Bad Request' })})
-        return
+        const errors = error.details.map( detail => detail.message)
+        return response.badRequest(errors, 'Validation Error')
     }
 
     const transactionService = new TransactionService()
     const transaction = await transactionService.getTransaction(params.transactionId)
     // TODO Error Handling
     const responseBody = { 'transaction': transaction }
-    return {statusCode: 200, body: JSON.stringify(responseBody)}
+    return response.ok(responseBody)
 }
