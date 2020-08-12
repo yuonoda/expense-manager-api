@@ -44,6 +44,13 @@ functions:
       - http: POST /transactions
         headers:
           Content-Type: "'application/json'"
+  updateTransaction:
+    handler: controllers/transaction-controller.updateTransaction
+    events:
+      - http: PUT /transactions/{transaction_id}
+        headers:
+          Content-Type: "'application/json'"
+
   initDb:
     handler: batch/init-db.init
 

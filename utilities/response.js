@@ -15,9 +15,9 @@ class Response {
     ok(body = null) {
         return this.response({ statusCode: 200, message: 'OK' , body})
     }
-    created(message = null) {
+    created(body = null) {
         console.info('Response::created')
-        return this.response({ statusCode: 201, message: message || 'Created' })
+        return this.response({ statusCode: 201, message: 'Created', body})
     }
     badRequest(errors = null ,message = null) {
         return this.response({statusCode: 400, message: message || 'Bad Request', errors})

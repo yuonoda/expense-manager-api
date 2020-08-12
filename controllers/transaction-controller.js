@@ -13,6 +13,8 @@ module.exports.getTransactions = async (event, context, callback) => {
     return response.ok(responseBody)
 }
 
+
+
 module.exports.createTransaction = async ({ body }, context, callback) => {
     console.info('crateTransaction')
 
@@ -43,14 +45,57 @@ module.exports.createTransaction = async ({ body }, context, callback) => {
 
     // データを追加
     const transactionService = new TransactionService()
-    const result = await transactionService.setTransaction(params)
+    const result = await transactionService.upsert(params)
 
     // 結果に応じてレスポンスを返す
     if( result ) {
-        return response.created()
+        return response.created(result)
     } else {
         return response.internalServerError()
     }
+
+}
+
+module.exports.updateTransaction = async ({ pathParameters, body })=> {
+    console.info('updateTransaction')
+
+    // JSONフォーマットチェック
+    const response = new Response()
+    try {
+        body = JSON.parse(body)
+    } catch (e) {
+        return response.badRequest(null, 'Invalid JSON format')
+    }
+    //
+    // // バリデーション
+    const params = {
+        transactionId: pathParameters.transaction_id,
+        transactionName: body.transaction_name,
+        transactionAmount: body.transaction_amount,
+    }
+    const validationSchema = Joi.object().keys({
+        transactionName: Joi.string(),
+        transactionAmount: Joi.number(),
+        transactionId:  Joi.number().required()
+    })
+    const { error } = validationSchema.validate(params)
+    if ( error ) {
+        const errors = error.details.map( detail => detail.message)
+        return response.badRequest(errors, 'Validation Error')
+    }
+
+    // データを更新
+    const transactionService = new TransactionService()
+    const result = await transactionService.upsert(params)
+    console.debug('result:', result)
+
+    // 結果に応じてレスポンスを返す
+    if( result ) {
+        return response.ok( result )
+    } else {
+        return response.internalServerError()
+    }
+
 
 }
 
