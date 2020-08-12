@@ -17,7 +17,7 @@ class TransactionService {
      * @param transactionId
      * @returns {Promise<Model<any, TModelAttributes>>}
      */
-    async getTransaction(transactionId) {
+    async getTransaction({transactionId}) {
         console.info('TransactionService::getTransactions')
         const where = {transaction_id: transactionId}
         const transaction = await db.Transaction.findOne({where})
@@ -47,6 +47,22 @@ class TransactionService {
         }).then(transaction => {
             // console.debug(transaction[0].dataValues)
             result = transaction[0].dataValues
+        }).catch(e => {
+            console.error(e)
+        })
+        return result
+    }
+
+    /**
+     * トランザクションを削除する
+     * @param transactionId
+     * @returns {Promise<boolean|number>}
+     */
+    async delete({transactionId}) {
+        console.info('TransactionService::delete ', transactionId)
+        let result = false
+        await db.Transaction.destroy({where: {transaction_id: transactionId}}).then(count => {
+            result = count
         }).catch(e => {
             console.error(e)
         })

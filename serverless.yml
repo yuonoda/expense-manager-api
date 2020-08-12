@@ -50,6 +50,12 @@ functions:
       - http: PUT /transactions/{transaction_id}
         headers:
           Content-Type: "'application/json'"
+  deleteTransaction:
+    handler: controllers/transaction-controller.deleteTransaction
+    events:
+      - http: DELETE /transactions/{transaction_id}
+        headers:
+          Content-Type: "'application/json'"
 
   initDb:
     handler: batch/init-db.init

@@ -125,3 +125,35 @@ module.exports.getTransaction = async ({ pathParameters }, context, callback) =>
     const responseBody = { 'transaction': transaction }
     return response.ok(responseBody)
 }
+
+
+module.exports.deleteTransaction = async ({ pathParameters }) => {
+    console.info('deleteTransaction')
+
+    // バリデーション
+    const params = {
+        transactionId: pathParameters.transaction_id
+    }
+    const validationSchema = Joi.object().keys({
+        transactionId: Joi.string()
+            .regex(/^[0-9]+$/)
+            .required()
+    })
+    const { error } = validationSchema.validate(params)
+    const response = new Response()
+    if ( error ) {
+        const errors = error.details.map( detail => detail.message)
+        return response.badRequest(errors, 'Validation Error')
+    }
+
+    // 取引詳細を削除
+    const transactionService = new TransactionService()
+    const result = await transactionService.delete(params)
+    if ( typeof result == 'number' && result >= 1) {
+        return response.ok(null,"Transaction " + String(params.transactionId) + " was deleted")
+    } else if ( typeof result == 'number' && result == 0) {
+        return response.notFound("Transaction " + String(params.transactionId) + " was not found")
+    } else {
+        return response.internalServerError()
+    }
+}
