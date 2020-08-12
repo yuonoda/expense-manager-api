@@ -6,9 +6,11 @@ module.exports.getTransactions = async (event, context, callback) => {
     console.info('getTransactions')
 
     const transactionService = new TransactionService()
-    const transactions = await transactionService.getTransactions()
+    let transactions = await transactionService.getTransactions()
     // TODO Error Handling
-    const responseBody = { 'transactions': transactions }
+
+    console.debug(transactions)
+    const responseBody = { 'transactions': __camelToSnake(transactions) }
     const response = new Response()
     return response.ok(responseBody)
 }
@@ -72,14 +74,14 @@ module.exports.updateTransaction = async ({ pathParameters, body })=> {
         transactionId: pathParameters.transaction_id,
         transactionName: body.transaction_name,
         transactionAmount: body.transaction_amount,
-        transactionTime: body.transaction_time,
+        paidAt: body.paid_at,
         isPaid: body.is_paid
     }
     const validationSchema = Joi.object().keys({
         transactionName: Joi.string().allow(null),
         transactionAmount: Joi.number().allow(null),
         transactionId:  Joi.number().required(),
-        transactionTime: Joi.string().allow(null),
+        paidAt: Joi.string().allow(null),
         isPaid: Joi.boolean().allow(null),
     })
     const { error } = validationSchema.validate(params)
@@ -159,5 +161,22 @@ module.exports.deleteTransaction = async ({ pathParameters }) => {
         return response.notFound("Transaction " + String(params.transactionId) + " was not found")
     } else {
         return response.internalServerError()
+    }
+}
+
+// TODO utilityに移す
+const __camelToSnake = (arg) => {
+    if (Array.isArray(arg) ) {
+        return arg.map(element => __camelToSnake(element))
+    } else if (typeof arg == 'object' && arg !== null) {
+        let replaced = {}
+        Object.keys(arg).forEach(key => {
+            const replacer = (x,y) => {return "_" + y.toLowerCase()}
+            const newKey = key.replace(/([A-Z])/g, replacer).replace(/^_/, "")
+            replaced[newKey] = __camelToSnake(arg[key])
+        })
+        return replaced
+    } else {
+        return arg
     }
 }

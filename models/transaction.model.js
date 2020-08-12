@@ -4,47 +4,31 @@ module.exports = sequelize => {
     const TransactionModel = sequelize.define(
         'Transaction',
         {
-            transaction_id: {
-                field: 'transaction_id',
+            transactionId: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
             },
-            account_id: {
-                field: 'account_id',
+            accountId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            transaction_name: {
-                field: 'transaction_name',
+            transactionName: {
                 type: Sequelize.TEXT,
                 default: null
             },
-            transaction_amount: {
-                field: 'transaction_amount',
+            transactionAmount: {
                 type: Sequelize.INTEGER,
                 default: null,
             },
-            transaction_time: {
-                field: 'transaction_time',
-                type: Sequelize.TIME,
+            paidAt: {
+                type: Sequelize.DATE,
                 default: null
             },
-            is_paid: {
-                field: 'is_paid',
+            isPaid: {
                 type: Sequelize.BOOLEAN,
                 default: false
             },
-            gmail_message_id: {
-                field: 'gmail_message_id',
-                type: Sequelize.STRING(16),
-                default: null,
-                unique: true
-            },
-            // TODO スネークにする
-            // created_at: {
-            //     field: 'created_at',
-            // }
         },
         {
             // 論理削除フラグ

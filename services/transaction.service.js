@@ -8,7 +8,10 @@ class TransactionService {
      */
     async getTransactions() {
         console.info('TransactionService::getTransactions')
-        const transactions = await db.Transaction.findAll()
+        let transactions = {}
+        await db.Transaction.findAll().then( models => {
+            transactions = models.map(model => model.get())
+        })
         return transactions
     }
 
@@ -34,7 +37,7 @@ class TransactionService {
      * @param accountId
      * @returns {Promise<boolean|object>}
      */
-    async upsert({transactionId,transactionName, transactionAmount, transactionTime, isPaid, accountId = 1}) {
+    async upsert({transactionId,transactionName, transactionAmount, paidAt, isPaid, accountId = 1}) {
         console.log('TransactionService::createTransaction');
         let result = false
         await db.Transaction.upsert({
@@ -42,7 +45,7 @@ class TransactionService {
             account_id: accountId,
             transaction_name: transactionName,
             transaction_amount: transactionAmount,
-            transaction_time: transactionTime,
+            paidAt: paidAt,
             is_paid: isPaid
         }).then(transaction => {
             // console.debug(transaction[0].dataValues)
