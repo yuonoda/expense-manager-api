@@ -72,11 +72,15 @@ module.exports.updateTransaction = async ({ pathParameters, body })=> {
         transactionId: pathParameters.transaction_id,
         transactionName: body.transaction_name,
         transactionAmount: body.transaction_amount,
+        transactionTime: body.transaction_time,
+        isPaid: body.is_paid
     }
     const validationSchema = Joi.object().keys({
-        transactionName: Joi.string(),
-        transactionAmount: Joi.number(),
-        transactionId:  Joi.number().required()
+        transactionName: Joi.string().allow(null),
+        transactionAmount: Joi.number().allow(null),
+        transactionId:  Joi.number().required(),
+        transactionTime: Joi.string().allow(null),
+        isPaid: Joi.boolean().allow(null),
     })
     const { error } = validationSchema.validate(params)
     if ( error ) {
