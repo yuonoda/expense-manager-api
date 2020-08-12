@@ -10,7 +10,10 @@ module.exports.getTransactions = async (event, context, callback) => {
     // TODO Error Handling
 
     console.debug(transactions)
-    const responseBody = { 'transactions': __camelToSnake(transactions) }
+    transactions = cleanupForJson(transactions)
+    transactions = __camelToSnake(transactions)
+    console.log(transactions)
+    const responseBody = { 'transactions': transactions}
     const response = new Response()
     return response.ok(responseBody)
 }
@@ -164,15 +167,19 @@ module.exports.deleteTransaction = async ({ pathParameters }) => {
     }
 }
 
+const cleanupForJson = (obj) => {
+    return JSON.parse(JSON.stringify(obj))
+}
 // TODO utilityに移す
 const __camelToSnake = (arg) => {
+    console.debug(arg)
     if (Array.isArray(arg) ) {
         return arg.map(element => __camelToSnake(element))
     } else if (typeof arg == 'object' && arg !== null) {
         let replaced = {}
         Object.keys(arg).forEach(key => {
             const replacer = (x,y) => {return "_" + y.toLowerCase()}
-            const newKey = key.replace(/([A-Z])/g, replacer).replace(/^_/, "")
+            const newKey = key.replace(/([A-Z])/g, replacer)
             replaced[newKey] = __camelToSnake(arg[key])
         })
         return replaced
