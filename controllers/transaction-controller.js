@@ -7,17 +7,11 @@ module.exports.getTransactions = async (event, context, callback) => {
 
     const transactionService = new TransactionService()
     let transactions = await transactionService.getTransactions()
-    // TODO Error Handling
 
-    console.debug(transactions)
-    transactions = cleanupForJson(transactions)
-    transactions = __camelToSnake(transactions)
-    console.log(transactions)
     const responseBody = { 'transactions': transactions}
     const response = new Response()
     return response.ok(responseBody)
 }
-
 
 
 module.exports.createTransaction = async ({ body }, context, callback) => {
@@ -164,26 +158,5 @@ module.exports.deleteTransaction = async ({ pathParameters }) => {
         return response.notFound("Transaction " + String(params.transactionId) + " was not found")
     } else {
         return response.internalServerError()
-    }
-}
-
-const cleanupForJson = (obj) => {
-    return JSON.parse(JSON.stringify(obj))
-}
-// TODO utilityに移す
-const __camelToSnake = (arg) => {
-    console.debug(arg)
-    if (Array.isArray(arg) ) {
-        return arg.map(element => __camelToSnake(element))
-    } else if (typeof arg == 'object' && arg !== null) {
-        let replaced = {}
-        Object.keys(arg).forEach(key => {
-            const replacer = (x,y) => {return "_" + y.toLowerCase()}
-            const newKey = key.replace(/([A-Z])/g, replacer)
-            replaced[newKey] = __camelToSnake(arg[key])
-        })
-        return replaced
-    } else {
-        return arg
     }
 }

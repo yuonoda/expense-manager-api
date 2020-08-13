@@ -1,3 +1,8 @@
+
+const Format = require('../utilities/format')
+/**
+ * APIレスポンスのレスポンスコードとコンテンツを制御する
+ */
 class Response {
     response({statusCode, body = null, message = null, errors = null}) {
         // ステータスが無効のときには、サーバーエラー
@@ -7,6 +12,8 @@ class Response {
 
         // body がないときは、messageとstatusCodeを返す
         if (!body) body = {statusCode, message, errors}
+        const format = new Format()
+        body = format.formatResponse(body)
         return {statusCode: statusCode, body: JSON.stringify(body)}
     }
 
