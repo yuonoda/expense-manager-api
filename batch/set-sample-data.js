@@ -38,16 +38,22 @@ module.exports.setSampleData = async () => {
             transactionName: '家賃',
             transactionAmount: 80000,
             accountId: 1,
+            paidAt: '2020-08-31T01:48:09.946Z',
+            isPaid: false
         },
         {
             transactionName: 'スーパー',
             transactionAmount: 2000,
             accountId: 1,
+            paidAt: '2020-08-14T01:48:09.946Z',
+            isPaid: true
         },
         {
             transactionName: 'コンビニ',
             transactionAmount: 500,
             accountId: 1,
+            paidAt: '2020-08-10T01:48:09.946Z',
+            isPaid: false
         },
         {
             transactionName: 'コンビニ',

@@ -41,12 +41,12 @@ class TransactionService {
         console.log('TransactionService::createTransaction');
         let result = false
         await db.Transaction.upsert({
-            transaction_id: transactionId,
-            account_id: accountId,
-            transaction_name: transactionName,
-            transaction_amount: transactionAmount,
-            paidAt: paidAt,
-            is_paid: isPaid
+            transactionId,
+            accountId,
+            transactionName,
+            transactionAmount,
+            paidAt,
+            isPaid
         }).then(transaction => {
             // console.debug(transaction[0].dataValues)
             result = transaction[0].dataValues
@@ -64,7 +64,7 @@ class TransactionService {
     async delete({transactionId}) {
         console.info('TransactionService::delete ', transactionId)
         let result = false
-        await db.Transaction.destroy({where: {transaction_id: transactionId}}).then(count => {
+        await db.Transaction.destroy({where: {transactionId}}).then(count => {
             result = count
         }).catch(e => {
             console.error(e)

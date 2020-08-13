@@ -1,30 +1,50 @@
+# Overview 
+This is my repository which offers the backend system of my expense manager.
 
+# API Endpoints
 
-
-## API List
-
-### Transaction List
+## Transaction List
 /transactions
 
-#### GET
-#### POST
+### GET
+Get a list of transactions.
 
-### Transaction Detail
+#### Response
+```json
+{
+    "transactions": [
+      ...same as transaction detail
+    ]
+}
+```
+
+### POST
+Add new transaction
+#### Request
+```json
+
+```
+#### Response
+
+## Transaction Detail
 /transactions/:transaction_id
 
-#### GET
-#### PUT
+### GET
+Get single transaction
 
-### Account List 
+### PUT
+Update single transaction
+
+## Account List 
 /accounts
 
-#### GET
+### GET
 
-### Acount Detail
-#### GET
-#### PUT
+## Acount Detail
+### GET
+Get a list of accounts
 
-### Error Response 
+## Error Response 
 ```json
 {
   "status": 400,
@@ -34,3 +54,6 @@
   ],
 }
 ```
+# Database
+
+![alt text](./er-diagram.jpg "ER Diagram")
