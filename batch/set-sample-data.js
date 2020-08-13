@@ -3,61 +3,61 @@ const db = require('../models/index')
 module.exports.setSampleData = async () => {
     await db.AccountGroup.bulkCreate([
         {
-            account_group_id: 1,
-            account_group_name: 'Monthly Accounts'
+            accountGroupId: 1,
+            accountGroupName: 'Monthly Accounts'
         },
         {
-            account_group_id: 2,
-            account_group_name: 'Saving Accounts'
+            accountGroupId: 2,
+            accountGroupName: 'Saving Accounts'
         }
     ])
 
     await db.Account.bulkCreate([
         {
-            account_id: 1,
-            account_name: '普通預金',
-            account_balance: 400000,
-            account_group_id: 1
+            accountId: 1,
+            accountName: '普通預金',
+            accountBalance: 400000,
+            accountGroupId: 1
         },
         {
-            account_id: 2,
-            account_name: '現金',
-            account_balance: 20000,
-            account_group_id: 1
+            accountId: 2,
+            accountName: '現金',
+            accountBalance: 20000,
+            accountGroupId: 1
         },
         {
-            account_id: 3,
-            account_name: '定期預金',
-            account_balance: 1000000,
-            account_group_id: 2
+            accountId: 3,
+            accountName: '定期預金',
+            accountBalance: 1000000,
+            accountGroupId: 2
         },
     ])
 
     await db.Transaction.bulkCreate([
         {
-            transaction_name: '家賃',
-            transaction_amount: 80000,
-            account_id: 1,
+            transactionName: '家賃',
+            transactionAmount: 80000,
+            accountId: 1,
         },
         {
-            transaction_name: 'スーパー',
-            transaction_amount: 2000,
-            account_id: 1,
+            transactionName: 'スーパー',
+            transactionAmount: 2000,
+            accountId: 1,
         },
         {
-            transaction_name: 'コンビニ',
-            transaction_amount: 500,
-            account_id: 1,
+            transactionName: 'コンビニ',
+            transactionAmount: 500,
+            accountId: 1,
         },
         {
-            transaction_name: 'コンビニ',
-            transaction_amount: 500,
-            account_id: 1,
+            transactionName: 'コンビニ',
+            transactionAmount: 500,
+            accountId: 1,
         },
         {
-            transaction_name: 'コンビニ',
-            transaction_amount: 500,
-            account_id: 1,
+            transactionName: 'コンビニ',
+            transactionAmount: 500,
+            accountId: 1,
         },
     ])
 

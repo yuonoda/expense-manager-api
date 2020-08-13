@@ -4,14 +4,12 @@ module.exports = sequelize => {
     const AccountGroupModel = sequelize.define(
         'AccountGroup',
         {
-            account_group_id: {
-                field: 'account_group_id',
+            accountGroupId: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
             },
-            account_group_name: {
-                field: 'account_group_name',
+            accountGroupName: {
                 type: Sequelize.TEXT,
             },
         },

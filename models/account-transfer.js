@@ -4,29 +4,24 @@ module.exports = sequelize => {
     const AccountTransferModel = sequelize.define(
         'AccountTransfer',
         {
-            account_id_from: {
-                field: 'account_id_from',
+            accountFrom: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: false,
             },
-            account_id_to: {
-                field: 'account_id_to',
+            accountTo: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: false,
             },
-            account_transfer_amount: {
-                field: 'account_transfer_amount',
+            transferAmount: {
                 type: Sequelize.INTEGER,
             },
-            account_transfer_time: {
-                field: 'account_transfer_time',
+            transferredAt: {
                 type: Sequelize.TIME,
                 default: null,
             },
-            is_account_transfered: {
-                field: 'is_account_transfered',
+            isTransferred: {
                 type: Sequelize.BOOLEAN,
             },
         },

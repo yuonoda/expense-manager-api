@@ -23,15 +23,15 @@ const sequelize = new Sequelize(
   }
 );
 
-db.Account = require('./account.model')(sequelize)
-db.Transaction = require('./transaction.model')(sequelize)
-db.AccountGroup = require('./account_group.model')(sequelize)
-db.AccountTransfer = require('./account_transfer.model')(sequelize)
+db.Account = require('./account')(sequelize)
+db.Transaction = require('./transaction')(sequelize)
+db.AccountGroup = require('./account-group')(sequelize)
+db.AccountTransfer = require('./account-transfer')(sequelize)
 
-db.Account.hasMany(db.Transaction, { foreignKey: 'account_id' })
-db.AccountGroup.hasMany(db.Account, { foreignKey: 'account_group_id'})
-db.Account.hasMany(db.AccountTransfer, { foreignKey: 'account_id_from'})
-db.Account.hasMany(db.AccountTransfer, { foreignKey: 'account_id_to'})
+db.Account.hasMany(db.Transaction, { foreignKey: 'accountId' })
+db.AccountGroup.hasMany(db.Account, { foreignKey: 'accountGroupId'})
+db.Account.hasMany(db.AccountTransfer, { foreignKey: 'accountFrom'})
+db.Account.hasMany(db.AccountTransfer, { foreignKey: 'accountTo'})
 
 db.sequelize = sequelize;
 db.Op = Sequelize.Op;

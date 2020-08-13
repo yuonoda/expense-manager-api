@@ -4,24 +4,20 @@ module.exports = sequelize => {
     const AccountModel = sequelize.define(
         'Account',
         {
-            account_id: {
-                field: 'account_id',
+            accountId: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
             },
-            account_group_id: {
-                field: 'account_group_id',
+            accountGroupId: {
                 type: Sequelize.INTEGER,
                 allowNull: true,
             },
-            account_name: {
-                field: 'account_name',
+            accountName: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
-            account_balance: {
-                field: 'account_balance',
+            accountBalance: {
                 type: Sequelize.INTEGER,
                 allowNull: true,
                 default: 0,
