@@ -26,15 +26,18 @@ module.exports.createTransaction = async ({ body }, context, callback) => {
     }
 
     // 中身のバリデーション
-    // TODO 他のパラメーターも追加
     // TODO より細かいバリデーション
     const params = {
         transactionName: body.transaction_name,
         transactionAmount: body.transaction_amount,
+        paidAt: body.paid_at,
+        isPaid: body.is_paid
     }
     const validationSchema = Joi.object().keys({
-        transactionName: Joi.string(),
-        transactionAmount: Joi.number()
+        transactionName: Joi.string().allow(null),
+        transactionAmount: Joi.number().allow(null),
+        paidAt: Joi.string().allow(null),
+        isPaid: Joi.boolean().allow(null),
     })
     const { error } = validationSchema.validate(params)
     if ( error ) {
