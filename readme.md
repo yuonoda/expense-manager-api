@@ -56,4 +56,8 @@ Get a list of accounts
 ```
 # Database
 
-![alt text](./er-diagram.jpg "ER Diagram")
+![ER Diagram](./er-diagram.jpg "ER Diagram")
+
+# AWS Archutetcture
+
+![Deployment Diagram](./deployment-diagram.png "Deployment Diagram")
