@@ -24,7 +24,6 @@ class AccountService {
 
     // 更新
     await db.Account.update(values, { where, returning: true }).then(values => {
-      console.debug(values)
       result = (values[0] > 0)? values[1][0].dataValues : false
     }).catch(e => {
       console.error(e)
