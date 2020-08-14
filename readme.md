@@ -59,6 +59,12 @@ Add a new transaction
 
 Request is same with PUT method of transaction detail
 
+## User Transaction List
+/users/:user_id/transactions/:transaction_id
+
+### GET
+Returns transactions of one user. Response format is same with transaction list. 
+
 ## Acount Detail
 ### GET
 Get a single account detail
@@ -104,6 +110,43 @@ Response
 }
 ```
 
+## User Detail
+/users/:user_id
+
+### GET
+
+Request
+
+## User Account Group Detail
+/users/:user_id/account-groups/:account_group_id
+
+### GET
+
+Response
+```json
+{
+  "account_group_id": 1,
+  "account_group_name": "生活費グループ",
+  "account_group_balance": 200000,
+  "account_group_bank_balance": 150000,
+  "account_group_cash_balance":  50000,
+  "unpaid_amount": 30000,
+  "subtracted_remaining_amount": 170000
+}
+```
+
+
+
+Response
+```json
+{
+  "user_id": 1,
+  "user_name": "Yu Onoda",
+  "user_email": "xxx@xxx",
+  "user_phone_number": "000000000",
+  "renewal_day": 20,
+}
+```
 
 
 ## Error Response 
