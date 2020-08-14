@@ -1,7 +1,43 @@
 # Overview 
-This is my repository which offers the backend system of my expense manager.
+This repository offers the backend system of my expense manager.
 
 # API Endpoints
+
+## Transaction Detail
+/transactions/:transaction_id
+
+### GET
+Get single transaction
+
+Response
+```json
+{
+    "transaction_id": 1,
+    "account_id": 1,
+    "transaction_name": "家賃",
+    "transaction_amount": 80000,
+    "paid_at": "2020-08-31T01:48:09.946Z",
+    "is_paid": false,
+    "created_at": "2020-08-13T07:52:49.115Z",
+    "updated_at": "2020-08-13T07:52:49.115Z",
+    "deleted_at": null,
+    "version": 0
+}
+```
+
+### PUT
+Update single transaction
+
+Request 
+```json
+{
+    "account_id": 1,
+    "transaction_name": "家賃",
+    "transaction_amount": 80000,
+    "paid_at": "2020-08-31T01:48:09.946Z",
+    "is_paid": false
+}
+```
 
 ## Transaction List
 /transactions
@@ -9,7 +45,7 @@ This is my repository which offers the backend system of my expense manager.
 ### GET
 Get a list of transactions.
 
-#### Response
+Response
 ```json
 {
     "transactions": [
@@ -19,30 +55,56 @@ Get a list of transactions.
 ```
 
 ### POST
-Add new transaction
-#### Request
-```json
+Add a new transaction
 
-```
-#### Response
+Request is same with PUT method of transaction detail
 
-## Transaction Detail
-/transactions/:transaction_id
-
+## Acount Detail
 ### GET
-Get single transaction
+Get a single account detail
 
-### PUT
-Update single transaction
+Response
+```json
+{
+    "account_id": 1,
+    "account_group_id": 1,
+    "account_name": "普通預金",
+    "account_balance": 400000,
+    "created_at": "2020-08-13T07:52:49.107Z",
+    "updated_at": "2020-08-13T07:52:49.107Z",
+    "deleted_at": null,
+    "version": 0
+}
+```
+
+### PUT 
+Uppdate an account detail
+
+Request
+```json
+{
+    "account_group_id": 1,
+    "account_name": "普通預金",
+    "account_balance": 400000
+}
+```
 
 ## Account List 
 /accounts
 
 ### GET
-
-## Acount Detail
-### GET
 Get a list of accounts
+
+Response
+```json
+{
+   "accounts": [
+      ... same with account detail
+   ]
+}
+```
+
+
 
 ## Error Response 
 ```json
@@ -54,6 +116,11 @@ Get a list of accounts
   ],
 }
 ```
+
+
+
+
+
 # Database
 
 ![ER Diagram](./er-diagram.jpg "ER Diagram")
