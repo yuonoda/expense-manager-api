@@ -59,7 +59,9 @@ Add a new transaction
 
 Request is same with PUT method of transaction detail
 
-## Acount Detail
+## Account Detail
+/accounts/:account_id
+
 ### GET
 Get a single account detail
 
