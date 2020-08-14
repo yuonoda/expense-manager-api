@@ -90,7 +90,6 @@ module.exports.updateTransaction = async ({ pathParameters, body })=> {
     // データを更新
     const transactionService = new TransactionService()
     const result = await transactionService.upsert(params)
-    console.debug('result:', result)
 
     // 結果に応じてレスポンスを返す
     if( result ) {

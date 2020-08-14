@@ -24,38 +24,38 @@ functions:
     handler: controllers/account-controller.getAccounts
     events:
       - http: GET /accounts
-        headers:
-          Content-Type: "'application/json'"
   getTransactions:
     handler: controllers/transaction-controller.getTransactions
     events:
       - http: GET /transactions
-        headers:
-          Content-Type: "'application/json'"
   getTransaction:
     handler: controllers/transaction-controller.getTransaction
     events:
       - http: GET /transactions/{transaction_id}
-        headers:
-          Content-Type: "'application/json'"
   createTransaction:
     handler: controllers/transaction-controller.createTransaction
     events:
-      - http: POST /transactions
-        headers:
-          Content-Type: "'application/json'"
+      - http:
+          method: POST
+          path: /transactions
+          cors:
+            origin: 'https://expense-manager.cloud'
   updateTransaction:
     handler: controllers/transaction-controller.updateTransaction
     events:
-      - http: PUT /transactions/{transaction_id}
-        headers:
-          Content-Type: "'application/json'"
+      - http:
+          method: PUT
+          path: /transactions/{transaction_id}
+          cors:
+            origin: 'https://expense-manager.cloud'
   deleteTransaction:
     handler: controllers/transaction-controller.deleteTransaction
     events:
-      - http: DELETE /transactions/{transaction_id}
-        headers:
-          Content-Type: "'application/json'"
+      - http:
+          method: DELETE
+          path: /transactions/{transaction_id}
+          cors:
+            origin: 'https://expense-manager.cloud'
 
   initDb:
     handler: batch/init-db.init
