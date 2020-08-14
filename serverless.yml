@@ -56,7 +56,14 @@ functions:
           path: /transactions/{transaction_id}
           cors:
             origin: 'https://expense-manager.cloud'
-
+  updateAccount:
+    handler: controllers/account-controller.updateAccount
+    events:
+      - http:
+          method: PUT
+          path: /accounts/{account_id}
+          cors:
+            origin: 'https://expense-manager.cloud'
   initDb:
     handler: batch/init-db.init
 

@@ -125,6 +125,6 @@ Response
 
 ![ER Diagram](./er-diagram.jpg "ER Diagram")
 
-# AWS Archutetcture
+# AWS Architecture
 
 ![Deployment Diagram](./deployment-diagram.png "Deployment Diagram")
