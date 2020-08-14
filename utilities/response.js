@@ -14,7 +14,11 @@ class Response {
         if (!body) body = {statusCode, message, errors}
         const format = new Format()
         body = format.formatResponse(body)
-        return {statusCode: statusCode, body: JSON.stringify(body)}
+        const headers = {
+            'Access-Control-Allow-Origin': 'https://expense-manager.cloud',
+            'Access-Control-Allow-Credentials': true,
+        }
+        return {statusCode: statusCode, body: JSON.stringify(body), headers}
     }
 
     ok(body = null, message = null) {
